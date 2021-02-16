@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Initial Setup", "Initial Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insert", "Insert\Insert.csproj", "{019899E2-2647-4293-B45D-76EF56B8D64F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VillainNames", "VillainNames\VillainNames.csproj", "{54C9C504-412C-4959-A11F-F70F7C5BA4F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinionNames", "MinionNames\MinionNames.csproj", "{B4879C7A-8D1F-4199-AFB3-40C395280571}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{019899E2-2647-4293-B45D-76EF56B8D64F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{019899E2-2647-4293-B45D-76EF56B8D64F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{019899E2-2647-4293-B45D-76EF56B8D64F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54C9C504-412C-4959-A11F-F70F7C5BA4F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54C9C504-412C-4959-A11F-F70F7C5BA4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54C9C504-412C-4959-A11F-F70F7C5BA4F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54C9C504-412C-4959-A11F-F70F7C5BA4F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4879C7A-8D1F-4199-AFB3-40C395280571}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4879C7A-8D1F-4199-AFB3-40C395280571}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4879C7A-8D1F-4199-AFB3-40C395280571}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4879C7A-8D1F-4199-AFB3-40C395280571}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
