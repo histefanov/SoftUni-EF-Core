@@ -36,14 +36,14 @@ namespace PrintAllMinionNames
 
                     while (difference < currentLastRow / 2)
                     {
-                        Console.WriteLine((currentFirstRow + difference) + "  " + dictionary[currentFirstRow + difference]);
-                        Console.WriteLine((currentLastRow - difference) + "  " + dictionary[currentLastRow - difference]);
+                        Console.WriteLine(dictionary[currentFirstRow + difference]);
+                        Console.WriteLine(dictionary[currentLastRow - difference]);
                         difference++;
                     }
 
                     if (dictionary.Count % 2 != 0)
                     {
-                        Console.WriteLine((currentLastRow - difference) + "  " + dictionary[currentLastRow - difference]);
+                        Console.WriteLine(dictionary[currentLastRow - difference]);
                     }
                 }     
             }
