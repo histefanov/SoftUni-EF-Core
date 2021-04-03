@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace CarDealer.DTO.Import
+namespace CarDealer.DTO.Export
 {
-    [XmlType("Car")]
-    public class CarImportDto
+    [XmlType("car")]
+    public class CarWithPartsExportDto
     {
-        [XmlElement("make")]
+        [XmlAttribute("make")]
         public string Make { get; set; }
 
-        [XmlElement("model")]
+        [XmlAttribute("model")]
         public string Model { get; set; }
 
-        [XmlElement("TraveledDistance")]
+        [XmlAttribute("travelled-distance")]
         public long TravelledDistance { get; set; }
 
         [XmlArray("parts")]
-        public CarPartImportDto[] Parts { get; set; }
+        public PartExportDto[] Parts { get; set; }
     }
 }
