@@ -20,13 +20,14 @@
 
         public DbSet<Mail> Mails { get; set; }
 
+        public DbSet<Prisoner> Prisoners { get; set; }
+
         public DbSet<Officer> Officers { get; set; }
 
         public DbSet<OfficerPrisoner> OfficersPrisoners { get; set; }
 
-        public DbSet<Prisoner> Prisoners { get; set; }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			if (!optionsBuilder.IsConfigured)
 			{
@@ -37,8 +38,20 @@
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
-			builder.Entity<OfficerPrisoner>()
-				.HasKey(x => new { x.PrisonerId, x.OfficerId });
+			builder.Entity<OfficerPrisoner>(op =>
+			{
+				op.HasKey(op => new { op.PrisonerId, op.OfficerId });
+
+				op.HasOne(op => op.Prisoner)
+					.WithMany(p => p.PrisonerOfficers)
+					.HasForeignKey(o => o.PrisonerId)
+					.OnDelete(DeleteBehavior.Restrict);
+
+				op.HasOne(of => of.Officer)
+					.WithMany(p => p.OfficerPrisoners)
+					.HasForeignKey(o => o.OfficerId)
+					.OnDelete(DeleteBehavior.Restrict);
+			});
 		}
 	}
 }

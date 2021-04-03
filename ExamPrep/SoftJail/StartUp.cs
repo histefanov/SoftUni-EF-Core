@@ -5,8 +5,6 @@
     using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using System.IO;
-    using System.Linq;
-    using SoftJail.Data.Models;
 
     public class StartUp
     {
@@ -16,19 +14,11 @@
 
             Mapper.Initialize(config => config.AddProfile<SoftJailProfile>());
 
-            ResetDatabase(context, shouldDropDatabase: true);
-
-            var department = new Department
-            {
-                Name = "67890-98765789"
-            };
-
-            context.Departments.Add(department);
-            context.SaveChanges();
+            ResetDatabase(context, shouldDropDatabase: false);
 
             var projectDir = GetProjectDirectory();
 
-            ImportEntities(context, projectDir + @"Datasets/", projectDir + @"ImportResults/");
+            //ImportEntities(context, projectDir + @"Datasets/", projectDir + @"ImportResults/");
             ExportEntities(context, projectDir + @"ExportResults/");
 
             using (var transaction = context.Database.BeginTransaction())
