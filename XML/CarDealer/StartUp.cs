@@ -24,10 +24,14 @@ namespace CarDealer
             var supplierXml = File.ReadAllText("../../../Datasets/suppliers.xml");
             var partsXml = File.ReadAllText("../../../Datasets/parts.xml");
             var carsXml = File.ReadAllText("../../../Datasets/cars.xml");
+            var customersXml = File.ReadAllText("../../../Datasets/customers.xml");
+            var salesXml = File.ReadAllText("../../../Datasets/sales.xml");
 
             ImportSuppliers(context, supplierXml);
             ImportParts(context, partsXml);
-            var result = ImportCars(context, carsXml);
+            ImportCars(context, carsXml);
+            ImportCustomers(context, customersXml);
+            var result = ImportSales(context, salesXml);
 
             Console.WriteLine(result);
         }
@@ -96,9 +100,82 @@ namespace CarDealer
 
         public static string ImportCars(CarDealerContext context, string inputXml)
         {
+            var validPartIds = context.Parts
+                .Select(x => x.Id);
+
+            XmlSerializer xmlSerializer = new XmlSerializer(
+                typeof(CarImportDto[]), new XmlRootAttribute("Cars"));
+
+            var carDtos = (CarImportDto[])xmlSerializer.Deserialize(new StringReader(inputXml));
+            var cars = new List<Car>();
+
+            foreach (var carDto in carDtos)
+            {
+                var car = new Car
+                {
+                    Make = carDto.Make,
+                    Model = carDto.Model,
+                    TravelledDistance = carDto.TravelledDistance
+                };
+
+                var parts = carDto.Parts
+                    .Select(x => x.Id)
+                    .Where(x => validPartIds.Contains(x))
+                    .Distinct();
+
+                foreach (var partId in parts)
+                {
+                    car.PartCars.Add(new PartCar
+                    {
+                        PartId = partId
+                    });
+                }
+
+                cars.Add(car);
+            }
+
+            context.Cars.AddRange(cars);
+            context.SaveChanges();
+
+            return $"Successfully imported {cars.Count()}";
+        }
+
+        public static string ImportCustomers(CarDealerContext context, string inputXml)
+        {
             InitializeMapper();
 
-            XmlSerializer xmlSerializer = new XmlSerializer()
+            var xmlSerializer = new XmlSerializer(
+                typeof(CustomerImportDto[]), new XmlRootAttribute("Customers"));
+
+            var customerDtos = (CustomerImportDto[])xmlSerializer.Deserialize(new StringReader(inputXml));
+            var customers = mapper.Map<IEnumerable<Customer>>(customerDtos);
+
+            context.Customers.AddRange(customers);
+            context.SaveChanges();
+
+            return $"Successfully imported {customers.Count()}";
+        }
+
+        public static string ImportSales(CarDealerContext context, string inputXml)
+        {
+            InitializeMapper();
+
+            var validCarIds = context.Cars
+                .Select(x => x.Id);
+
+            var xmlSerializer = new XmlSerializer(
+                typeof(SaleImportDto[]), new XmlRootAttribute("Sales"));
+
+            var saleDtos = (SaleImportDto[])xmlSerializer
+                .Deserialize(new StringReader(inputXml));
+
+            var sales = mapper.Map<IEnumerable<Sale>>(
+                saleDtos.Where(x => validCarIds.Contains(x.CarId)));
+
+            context.Sales.AddRange(sales);
+            context.SaveChanges();
+
+            return $"Successfully imported {sales.Count()}";
         }
     }
 }
